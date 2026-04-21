@@ -4,7 +4,7 @@ OAK-D, Orbbec Gemini E/2L, Basler 카메라를 지원하는 범용 ArUco / April
 
 ## Features
 
-- **멀티 카메라 지원**: OAK-D (depthai), Orbbec Gemini E / Gemini 2L (pyorbbecsdk), Basler (pypylon)
+- **멀티 카메라 지원**: Luxonis OAK-D / OAK-1 (depthai), Orbbec Gemini E / Gemini 2L (pyorbbecsdk), Basler (pypylon)
 - **자동 감지 및 런타임 전환**: 연결된 카메라 자동 탐색, `C` 키로 전환
 - **마커 딕셔너리**: ArUco 4x4_50, 6x6_250, AprilTag 36h11, 25h9
 - **6D 포즈 추정**: `rvec` / `tvec` → 회전 (도), 위치 (미터), 거리
@@ -48,7 +48,7 @@ python -m marker_detector --marker-size 0.05 --calib calib.yaml
 
 | 인자 | 기본값 | 설명 |
 |---|---|---|
-| `--camera` | 자동 감지 | `oakd`, `gemini_e`, `gemini_2l`, `basler` |
+| `--camera` | 자동 감지 | `oakd`, `oak1`, `gemini_e`, `gemini_2l`, `basler` |
 | `--width` | 640 | 해상도 가로 |
 | `--height` | 480 | 해상도 세로 |
 | `--fps` | 30 | 15 / 30 / 60 |
@@ -81,7 +81,7 @@ marker_detector/
 ├── cameras/
 │   ├── __init__.py      # create_camera() 팩토리 + 자동 감지
 │   ├── base.py          # CameraConfig + BaseCamera ABC
-│   ├── oakd.py          # OAK-D (depthai)
+│   ├── luxonis.py       # OAK-D / OAK-1 (depthai)
 │   ├── orbbec.py        # Orbbec Gemini E / 2L (pyorbbecsdk)
 │   └── basler.py        # Basler (pypylon)
 └── docs/
