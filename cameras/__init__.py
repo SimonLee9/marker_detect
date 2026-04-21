@@ -91,12 +91,18 @@ def _scan_cameras() -> list:
     """실제 카메라 스캔"""
     found = []
 
-    # OAK-D 감지
+    # Luxonis OAK 시리즈 감지 (OAK-D / OAK-1)
     try:
         import depthai as dai
-        devices = dai.Device.getAllAvailableDevices()
-        if len(devices) > 0:
-            found.append(("oakd", f"OAK-D ({devices[0].name})"))
+        for info in dai.Device.getAllAvailableDevices():
+            model_name = _luxonis_model_name(info)
+            if "OAK-1" in model_name.upper():
+                cam_type = "oak1"
+                display_model = "OAK-1"
+            else:
+                cam_type = "oakd"  # OAK-D / OAK-D-S2 / OAK-D-Lite 전부 수용
+                display_model = "OAK-D"
+            found.append((cam_type, f"{display_model} ({info.name})"))
     except Exception:
         pass
 
@@ -130,3 +136,30 @@ def _scan_cameras() -> list:
         pass
 
     return found
+
+
+def _luxonis_model_name(info) -> str:
+    """DeviceInfo에서 Luxonis 모델명 추출. 실패 시 디바이스를 잠깐 열어 조회."""
+    # Step A: DeviceInfo 필드 직접 조회 (depthai 2.22+는 productName 노출)
+    for attr in ("productName", "getProductName", "name"):
+        try:
+            val = getattr(info, attr, None)
+            val = val() if callable(val) else val
+            if val and "OAK" in str(val).upper():
+                return str(val)
+        except Exception:
+            pass
+
+    # Step B: 디바이스 연결해서 모델명 읽기 (수백 ms 지연)
+    try:
+        import depthai as dai
+        with dai.Device(info) as dev:
+            for method in ("getDeviceName", "getProductName"):
+                try:
+                    return getattr(dev, method)()
+                except Exception:
+                    pass
+    except Exception:
+        pass
+
+    return ""
