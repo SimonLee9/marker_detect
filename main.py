@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""범용 마커 감지 프로그램 - OAK-D, Orbbec Gemini E/2L, Basler 지원
+"""범용 마커 감지 프로그램 - Luxonis OAK-D / OAK-1, Orbbec Gemini E/2L, Basler 지원
 카메라 자동 감지, 런타임 전환 지원"""
 
 import argparse

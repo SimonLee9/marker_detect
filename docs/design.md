@@ -1,7 +1,7 @@
 # Universal Marker Detector - Design Spec
 
 ## Overview
-OAK-D, Orbbec Gemini E/2L, Basler 카메라를 지원하는 범용 ArUco/AprilTag 마커 감지 프로그램.
+Luxonis OAK-D / OAK-1, Orbbec Gemini E/2L, Basler 카메라를 지원하는 범용 ArUco/AprilTag 마커 감지 프로그램.
 
 ## Architecture
 ```
@@ -12,7 +12,7 @@ marker_detector/
   cameras/
     __init__.py         # create_camera() 팩토리
     base.py             # CameraConfig + BaseCamera ABC
-    oakd.py             # depthai
+    luxonis.py          # depthai (OAK-D / OAK-1)
     orbbec.py           # pyorbbecsdk (Gemini E, Gemini 2L)
     basler.py           # pypylon
 ```
@@ -27,7 +27,7 @@ marker_detector/
 ## CLI Arguments
 | Arg | Default | Description |
 |-----|---------|-------------|
-| --camera | required | oakd, gemini_e, gemini_2l, basler |
+| --camera | auto-detect | oakd, oak1, gemini_e, gemini_2l, basler |
 | --width | 1280 | Resolution width |
 | --height | 720 | Resolution height |
 | --fps | 30 | 15, 30, 60 |

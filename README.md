@@ -1,6 +1,6 @@
 # Marker Detector
 
-OAK-D, Orbbec Gemini E/2L, Basler 카메라를 지원하는 범용 ArUco / AprilTag 마커 감지 프로그램.
+Luxonis OAK-D / OAK-1, Orbbec Gemini E/2L, Basler 카메라를 지원하는 범용 ArUco / AprilTag 마커 감지 프로그램.
 
 ## Features
 
@@ -18,7 +18,7 @@ OAK-D, Orbbec Gemini E/2L, Basler 카메라를 지원하는 범용 ArUco / April
 - `opencv-contrib-python` (ArUco 모듈 포함)
 - `numpy`, `matplotlib`
 - 사용할 카메라 SDK:
-  - OAK-D: `depthai`
+  - Luxonis OAK-D / OAK-1: `depthai`
   - Orbbec: `pyorbbecsdk`
   - Basler: `pypylon`
 
