@@ -2,10 +2,17 @@ from .base import BaseCamera, CameraConfig
 
 
 CAMERA_REGISTRY = {
-    "oakd": ("cameras.oakd", "OakDCamera"),
-    "gemini_e": ("cameras.orbbec", "OrbbecCamera"),
+    "oakd":      ("cameras.luxonis", "LuxonisCamera"),
+    "oak1":      ("cameras.luxonis", "LuxonisCamera"),
+    "gemini_e":  ("cameras.orbbec", "OrbbecCamera"),
     "gemini_2l": ("cameras.orbbec", "OrbbecCamera"),
-    "basler": ("cameras.basler", "BaslerCamera"),
+    "basler":    ("cameras.basler", "BaslerCamera"),
+}
+
+# Luxonis 모델별 표시명 (LuxonisCamera 생성자의 model 파라미터로 전달)
+LUXONIS_MODELS = {
+    "oakd": "OAK-D",
+    "oak1": "OAK-1",
 }
 
 # Orbbec 모델별 device_filter (pyorbbecsdk에서 디바이스 식별에 사용)
@@ -27,6 +34,8 @@ def create_camera(camera_type: str, config: CameraConfig, **kwargs) -> BaseCamer
     module = importlib.import_module(f"marker_detector.{module_path}")
     cls = getattr(module, class_name)
 
+    if camera_type in LUXONIS_MODELS:
+        return cls(config, model=LUXONIS_MODELS[camera_type], **kwargs)
     if camera_type in ORBBEC_MODELS:
         return cls(config, model=ORBBEC_MODELS[camera_type], **kwargs)
     return cls(config, **kwargs)
